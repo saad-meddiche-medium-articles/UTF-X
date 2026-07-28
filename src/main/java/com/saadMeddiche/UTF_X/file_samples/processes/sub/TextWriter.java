@@ -13,11 +13,11 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 @Slf4j
-public class FileSampleWriter implements SubProcess {
+public class TextWriter implements SubProcess {
 
     @Override
     public String name() {
-        return "writer";
+        return "text_writer";
     }
 
     @Override

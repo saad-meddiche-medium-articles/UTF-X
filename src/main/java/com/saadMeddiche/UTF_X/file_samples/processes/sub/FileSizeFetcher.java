@@ -12,11 +12,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
 @Slf4j
-public class FileSampleLength implements SubProcess {
+public class FileSizeFetcher implements SubProcess {
 
     @Override
     public String name() {
-        return "length_fetcher";
+        return "file_size_fetcher";
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FileSampleLength implements SubProcess {
 
             long sampleSize = attributes.size();
 
-            log.info(AnsiOutput.toString(AnsiColor.BLUE, "File sample [{}] size is: {}"), fileSample.getFileName(), sampleSize);
+            log.info(AnsiOutput.toString(AnsiColor.BLUE, "File [{}] size is: {}"), fileSample.getFileName(), sampleSize);
 
         }
 
