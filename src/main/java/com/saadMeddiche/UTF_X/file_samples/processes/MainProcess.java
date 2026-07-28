@@ -30,6 +30,8 @@ public class MainProcess implements CommandLineRunner {
 
         this.startSubProcess(new TextReader());
 
+        this.startSubProcess(new BytePrinter());
+
     }
 
     private void startSubProcess(SubProcess subProcess) {
