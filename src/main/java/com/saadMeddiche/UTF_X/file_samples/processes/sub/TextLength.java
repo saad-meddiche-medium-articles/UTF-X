@@ -23,8 +23,8 @@ public class TextLength implements SubProcess {
 
             byte[] fileBytes = config.getTextSample().getBytes(fileSample.getStandardCharset());
 
-            log.info(AnsiOutput.toString(AnsiColor.BRIGHT_WHITE, " - Text bytes in {}: {}"), fileSample.getFileName(), fileBytes);
-            log.info(AnsiOutput.toString(AnsiColor.BRIGHT_WHITE, " - Simple bytes length in {}: {}"), fileSample.getFileName(), fileBytes.length);
+            log.info(" - Text bytes in {}: {}", fileSample.getPaintedFileName(), fileBytes);
+            log.info(" - Simple bytes length in {}: {}", fileSample.getPaintedFileName(), fileBytes.length);
 
         }
 

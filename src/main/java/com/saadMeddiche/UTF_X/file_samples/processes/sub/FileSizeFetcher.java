@@ -40,7 +40,7 @@ public class FileSizeFetcher implements SubProcess {
 
             long sampleSize = attributes.size();
 
-            log.info(AnsiOutput.toString(AnsiColor.BLUE, "File [{}] size is: {}"), fileSample.getFileName(), sampleSize);
+            log.info(" - File [{}] size is: {}", fileSample.getPaintedFileName(), sampleSize);
 
         }
 
