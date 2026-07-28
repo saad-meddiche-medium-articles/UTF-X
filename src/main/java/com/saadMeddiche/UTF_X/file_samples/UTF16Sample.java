@@ -29,7 +29,7 @@ public class UTF16Sample implements FileSample {
 
     @Override
     public AnsiElement[] getAnsiElements() {
-        return new AnsiElement[]{AnsiColor.YELLOW, AnsiBackground.WHITE};
+        return new AnsiElement[]{AnsiColor.BRIGHT_YELLOW};
     }
 
 }

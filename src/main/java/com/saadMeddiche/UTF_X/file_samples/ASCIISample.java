@@ -29,7 +29,7 @@ public class ASCIISample implements FileSample {
 
     @Override
     public AnsiElement[] getAnsiElements() {
-        return new AnsiElement[]{AnsiColor.BLACK, AnsiBackground.WHITE};
+        return new AnsiElement[]{AnsiColor.YELLOW};
     }
 
 

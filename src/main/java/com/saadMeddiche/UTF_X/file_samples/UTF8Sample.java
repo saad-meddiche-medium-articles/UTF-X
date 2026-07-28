@@ -29,7 +29,7 @@ public class UTF8Sample implements FileSample {
 
     @Override
     public AnsiElement[] getAnsiElements() {
-        return new AnsiElement[]{AnsiColor.GREEN, AnsiBackground.WHITE};
+        return new AnsiElement[]{AnsiColor.GREEN};
     }
 
 }
