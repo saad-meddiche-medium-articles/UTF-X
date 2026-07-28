@@ -32,7 +32,7 @@ public class TextWriter implements SubProcess {
                 Files.writeString(fileSample.getFilePath(),  config.getTextSample(), fileSample.getStandardCharset(), TRUNCATE_EXISTING, CREATE);
             }
             catch (Exception e) {
-                log.info(AnsiOutput.toString(AnsiColor.BRIGHT_RED, " - Error: failed to write text sample in sample {}"), config.getTextSample());
+                log.info(AnsiOutput.toString(AnsiColor.BRIGHT_RED, " - Error: failed to write text in sample {}"), config.getTextSample());
             }
 
         }
