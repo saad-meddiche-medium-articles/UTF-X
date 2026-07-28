@@ -1,7 +1,5 @@
 package com.saadMeddiche.UTF_X.file_samples;
 
-import org.springframework.boot.ansi.AnsiBackground;
-import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiElement;
 import org.springframework.boot.ansi.AnsiOutput;
 
