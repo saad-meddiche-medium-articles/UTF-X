@@ -20,7 +20,7 @@ public class UTF8Sample implements FileSample {
     }
 
     @Override
-    public Charset getStandardCharsets() {
+    public Charset getStandardCharset() {
         return StandardCharsets.UTF_8;
     }
 

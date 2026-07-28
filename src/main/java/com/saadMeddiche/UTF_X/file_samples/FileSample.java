@@ -10,7 +10,7 @@ public interface FileSample {
 
     Path getFilePath();
 
-    Charset getStandardCharsets();
+    Charset getStandardCharset();
 
     default boolean doesFileExist() {
         return Files.exists(getFilePath());
