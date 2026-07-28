@@ -26,13 +26,10 @@ public class TextWriter implements SubProcess {
         log.info(AnsiOutput.toString(AnsiColor.BRIGHT_WHITE, " - Sample chars: {}"), config.getTextSample().toCharArray());
         log.info(AnsiOutput.toString(AnsiColor.BRIGHT_WHITE, " - Simple char length: {}"), config.getTextSample().length());
 
-        log.info(AnsiOutput.toString(AnsiColor.BRIGHT_WHITE, " - Simple bytes: {}"), config.getTextSample().getBytes());
-        log.info(AnsiOutput.toString(AnsiColor.BRIGHT_WHITE, " - Simple bytes length: {}"), config.getTextSample().getBytes().length);
-
         for(var fileSample : fileSamples) {
 
             try {
-                Files.writeString(fileSample.getFilePath(),  config.getTextSample(), fileSample.getStandardCharsets(), TRUNCATE_EXISTING, CREATE);
+                Files.writeString(fileSample.getFilePath(),  config.getTextSample(), fileSample.getStandardCharset(), TRUNCATE_EXISTING, CREATE);
             }
             catch (Exception e) {
                 log.info(AnsiOutput.toString(AnsiColor.BRIGHT_RED, " - Error: failed to write text sample in sample {}"), config.getTextSample());

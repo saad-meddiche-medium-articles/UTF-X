@@ -2,8 +2,9 @@ package com.saadMeddiche.UTF_X.file_samples.processes;
 
 import com.saadMeddiche.UTF_X.file_samples.FileSample;
 import com.saadMeddiche.UTF_X.file_samples.config.FileSampleConfig;
-import com.saadMeddiche.UTF_X.file_samples.processes.sub.FileSampleLength;
-import com.saadMeddiche.UTF_X.file_samples.processes.sub.FileSampleWriter;
+import com.saadMeddiche.UTF_X.file_samples.processes.sub.FileSizeFetcher;
+import com.saadMeddiche.UTF_X.file_samples.processes.sub.TextLength;
+import com.saadMeddiche.UTF_X.file_samples.processes.sub.TextWriter;
 import com.saadMeddiche.UTF_X.file_samples.processes.sub.SubProcess;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +25,11 @@ public class MainProcess implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        this.startSubProcess(new FileSampleWriter());
+        this.startSubProcess(new TextWriter());
 
-        this.startSubProcess(new FileSampleLength());
+        this.startSubProcess(new TextLength());
+
+        this.startSubProcess(new FileSizeFetcher());
 
     }
 
