@@ -1,5 +1,8 @@
 package com.saadMeddiche.UTF_X.file_samples;
 
+import org.springframework.boot.ansi.AnsiBackground;
+import org.springframework.boot.ansi.AnsiColor;
+import org.springframework.boot.ansi.AnsiElement;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.Charset;
@@ -22,6 +25,11 @@ public class UTF16LESample implements FileSample {
     @Override
     public Charset getStandardCharset() {
         return StandardCharsets.UTF_16LE;
+    }
+
+    @Override
+    public AnsiElement[] getAnsiElements() {
+        return new AnsiElement[]{AnsiColor.YELLOW, AnsiBackground.WHITE};
     }
 
 }
