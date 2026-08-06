@@ -8,4 +8,6 @@
 4. [ ] Byte order types:
    1. [ ] big endian
    2. [ ] little endian
-5. [ ] Fix the bug that happens when the text contains  '\n'
+
+# Program FIXs or FEATs
+1. [ ] Fix the bug that happens when the text contains  '\n'
