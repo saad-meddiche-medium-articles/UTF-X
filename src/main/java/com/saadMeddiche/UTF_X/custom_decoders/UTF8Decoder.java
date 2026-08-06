@@ -2,6 +2,7 @@ package com.saadMeddiche.UTF_X.custom_decoders;
 
 import com.saadMeddiche.UTF_X.file_samples.FileSample;
 import com.saadMeddiche.UTF_X.file_samples.UTF8Sample;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
+@Slf4j
 public class UTF8Decoder  {
 
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ public class UTF8Decoder  {
 
         try (SeekableByteChannel ch = Files.newByteChannel(file.toPath(), StandardOpenOption.READ)) {
 
-            ByteBuffer bf = ByteBuffer.allocate((int) Math.min(1_024, file.length())); // 1Kio
+            ByteBuffer bf = ByteBuffer.allocate((int) Math.min(4, file.length())); // 1Kio
 
             long characterCount = 1;
 
@@ -34,19 +36,22 @@ public class UTF8Decoder  {
 
                 bf.flip();
 
-                byte[] array = bf.array();
+                while (bf.position() < bf.limit()) {
 
-                for(int index = 0; index < array.length;) {
-
-                    byte headByte = array[index++];
+                    byte headByte = bf.get();
 
                     if((headByte & 0b1111_0000) == 0b1111_0000) {
 
-                        byte b2 = array[index++];
+                        if(bf.remaining() < 3) {
+                            bf.position(bf.position() - 1);
+                            break;
+                        }
 
-                        byte b3 = array[index++];
+                        byte b2 = bf.get();
 
-                        byte b4 = array[index++];
+                        byte b3 = bf.get();
+
+                        byte b4 = bf.get();
 
                         char[] characters = characters(headByte, b2, b3, b4);
 
@@ -58,9 +63,14 @@ public class UTF8Decoder  {
 
                     if((headByte & 0b1110_0000) == 0b1110_0000) {
 
-                        byte b2 = array[index++];
+                        if(bf.remaining() < 2) {
+                            bf.position(bf.position() - 1);
+                            break;
+                        }
 
-                        byte b3 = array[index++];
+                        byte b2 = bf.get();
+
+                        byte b3 = bf.get();
 
                         char character = character(headByte, b2, b3);
 
@@ -72,7 +82,12 @@ public class UTF8Decoder  {
 
                     if((headByte & 0b1100_0000) == 0b1100_0000) {
 
-                        byte b2 = array[index++];
+                        if(bf.remaining() < 1) {
+                            bf.position(bf.position() - 1);
+                            break;
+                        }
+
+                        byte b2 = bf.get();
 
                         char character = character(headByte, b2);
 
@@ -102,6 +117,7 @@ public class UTF8Decoder  {
 
 
         } catch (IOException e) {
+            log.error("Error while decoding", e);
             return "FAILED TO DECODE";
         }
 
