@@ -1,6 +1,5 @@
 package com.saadMeddiche.UTF_X.custom_decoders;
 
-import com.saadMeddiche.UTF_X.file_samples.FileSample;
 import com.saadMeddiche.UTF_X.file_samples.UTF8Sample;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,6 +8,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 @Slf4j
@@ -18,19 +18,21 @@ public class UTF8Decoder  {
 
         UTF8Decoder decoder = new UTF8Decoder();
 
-        decoder.readString(new UTF8Sample());
+        String result = decoder.readString(new UTF8Sample().getFilePath());
+
+        System.out.println(result);
 
     }
 
-    public String readString(FileSample fileSample) {
+    public String readString(Path filePath) {
 
-        File file = fileSample.getFilePath().toFile();
 
-        try (SeekableByteChannel ch = Files.newByteChannel(file.toPath(), StandardOpenOption.READ)) {
+        File file = filePath.toFile();
 
+        try (SeekableByteChannel ch = Files.newByteChannel(filePath, StandardOpenOption.READ)) {
+
+            StringBuilder stringBuilder = new StringBuilder();
             ByteBuffer bf = ByteBuffer.allocate((int) Math.min(4, file.length())); // 1Kio
-
-            long characterCount = 1;
 
             while(ch.read(bf) > 0) {
 
@@ -55,7 +57,7 @@ public class UTF8Decoder  {
 
                         char[] characters = characters(headByte, b2, b3, b4);
 
-                        System.out.println("Character #" + characterCount++  + ": " +  new String(characters));
+                        stringBuilder.append(characters);
 
                         continue;
 
@@ -74,7 +76,7 @@ public class UTF8Decoder  {
 
                         char character = character(headByte, b2, b3);
 
-                        System.out.println("Character #" + characterCount++  + ": " +  character);
+                        stringBuilder.append(character);
 
                         continue;
 
@@ -91,7 +93,7 @@ public class UTF8Decoder  {
 
                         char character = character(headByte, b2);
 
-                        System.out.println("Character #" + characterCount++  + ": " +  character);
+                        stringBuilder.append(character);
 
                         continue;
 
@@ -101,7 +103,7 @@ public class UTF8Decoder  {
 
                         char character = character(headByte);
 
-                        System.out.println("Character #" + characterCount++  + ": " +  character);
+                        stringBuilder.append(character);
 
                         continue;
 
@@ -113,7 +115,7 @@ public class UTF8Decoder  {
 
             }
 
-            return "";
+            return stringBuilder.toString();
 
 
         } catch (IOException e) {
