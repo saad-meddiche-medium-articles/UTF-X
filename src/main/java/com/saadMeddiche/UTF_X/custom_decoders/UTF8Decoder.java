@@ -32,7 +32,7 @@ public class UTF8Decoder  {
         try (SeekableByteChannel ch = Files.newByteChannel(filePath, StandardOpenOption.READ)) {
 
             StringBuilder stringBuilder = new StringBuilder();
-            ByteBuffer bf = ByteBuffer.allocate((int) Math.min(4, file.length())); // 1Kio
+            ByteBuffer bf = ByteBuffer.allocate((int) Math.min(1_024, file.length())); // 1Kio
 
             while(ch.read(bf) > 0) {
 
