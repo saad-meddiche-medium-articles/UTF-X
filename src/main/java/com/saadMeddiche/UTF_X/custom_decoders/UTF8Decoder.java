@@ -127,7 +127,7 @@ public class UTF8Decoder  {
 
     private char character(byte b1) {
 
-        byte e1 = (byte) (b1 & 0b0111_1111);
+        int e1 = b1 & 0b0111_1111;
 
         return (char) e1;
 
@@ -135,9 +135,9 @@ public class UTF8Decoder  {
 
     private char character(byte b1, byte b2) {
 
-        byte e1 = (byte) (b1 & 0b0001_1111);
+        int e1 = b1 & 0b0001_1111;
 
-        byte e2 = (byte) (b2 & 0b0011_1111);
+        int e2 = b2 & 0b0011_1111;
 
         int merged = (e1 << 6) + e2;
 
@@ -147,11 +147,11 @@ public class UTF8Decoder  {
 
     private char character(byte b1, byte b2, byte b3) {
 
-        byte e1 = (byte) (b1 & 0b0000_1111);
+        int e1 = b1 & 0b0000_1111;
 
-        byte e2 = (byte) (b2 & 0b0011_1111);
+        int e2 = b2 & 0b0011_1111;
 
-        byte e3 = (byte) (b3 & 0b0011_1111);
+        int e3 = b3 & 0b0011_1111;
 
         int merged = (e1 << 12) + (e2 << 6) + e3;
 
@@ -161,13 +161,13 @@ public class UTF8Decoder  {
 
     private char[] characters(byte b1, byte b2, byte b3, byte b4) {
 
-        byte e1 = (byte) (b1 & 0b0000_0111);
+        int e1 = b1 & 0b0000_0111;
 
-        byte e2 = (byte) (b2 & 0b0011_1111);
+        int e2 = b2 & 0b0011_1111;
 
-        byte e3 = (byte) (b3 & 0b0011_1111);
+        int e3 = b3 & 0b0011_1111;
 
-        byte e4 = (byte) (b4 & 0b0011_1111);
+        int e4 = b4 & 0b0011_1111;
 
         int merged = (e1 << 18) + (e2 << 12) + (e3 << 6) + e4;
 
