@@ -14,3 +14,4 @@
 
 # Questions
 1. Why using UTF-8 could be up to 1.5 times less memory efficient than UTF-16.
+2. What are BMP characters 
