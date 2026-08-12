@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+import static com.saadMeddiche.UTF_X.utils.ByteUtil.*;
+
 @Slf4j
 public class UTF8Decoder  {
 
@@ -55,6 +57,11 @@ public class UTF8Decoder  {
 
                         byte b4 = bf.get();
 
+                        if(!isContinuation(b2) || !isContinuation(b3) || !isContinuation(b4)) {
+                            stringBuilder.append('\uFFFD');
+                            continue;
+                        }
+
                         char[] characters = characters(headByte, b2, b3, b4);
 
                         stringBuilder.append(characters);
@@ -74,6 +81,11 @@ public class UTF8Decoder  {
 
                         byte b3 = bf.get();
 
+                        if(!isContinuation(b2) || !isContinuation(b3)) {
+                            stringBuilder.append('\uFFFD');
+                            continue;
+                        }
+
                         char character = character(headByte, b2, b3);
 
                         stringBuilder.append(character);
@@ -90,6 +102,11 @@ public class UTF8Decoder  {
                         }
 
                         byte b2 = bf.get();
+
+                        if(!isContinuation(b2)) {
+                            stringBuilder.append('\uFFFD');
+                            continue;
+                        }
 
                         char character = character(headByte, b2);
 
@@ -172,6 +189,14 @@ public class UTF8Decoder  {
         int merged = (e1 << 18) + (e2 << 12) + (e3 << 6) + e4;
 
         return Character.toChars(merged);
+
+    }
+
+    private boolean isContinuation(byte b) {
+
+        return isBitSet(b , 7)
+               &&
+               isBitNoSet(b, 6);
 
     }
 
