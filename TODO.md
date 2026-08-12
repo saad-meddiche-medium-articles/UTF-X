@@ -1,6 +1,8 @@
 # Terms to look for
 1. [ ] ASCII
-2. [ ] ISO_8859_1
+2. [ ] ISO
+   1. [ ] ISO_8859_1
+   2. [ ] ISO/IEC 10646
 3. [ ] UTF_X:
    1. [ ] UTF-8
    2. [ ] UTF_16
