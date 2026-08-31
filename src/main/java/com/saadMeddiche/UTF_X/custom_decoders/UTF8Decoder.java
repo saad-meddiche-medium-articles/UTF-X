@@ -126,6 +126,8 @@ public class UTF8Decoder  {
 
                     }
 
+                    stringBuilder.append('\uFFFD');
+
                 }
 
                 bf.compact();
