@@ -67,7 +67,7 @@ public class UTF8Decoder  {
                         int codePoint = extractCodePoint(headByte, b2, b3, b4);
 
                         char[] characters;
-                        if(0x10000 <= codePoint && codePoint < 0x10FFFF)
+                        if(0x10000 <= codePoint && codePoint <= 0x10FFFF)
                             characters = Character.toChars(codePoint);
                         else
                             characters = new char[] {'\uFFFD', '\uFFFD', '\uFFFD', '\uFFFD'};
@@ -97,7 +97,7 @@ public class UTF8Decoder  {
                         int codePoint = extractCodePoint(headByte, b2, b3);
 
                         char[] characters;
-                        if(0x800 <= codePoint && codePoint < 0xFFFF)
+                        if(0x800 <= codePoint && codePoint <= 0xFFFF)
                             characters = Character.toChars(codePoint);
                         else
                             characters = new char[] {'\uFFFD', '\uFFFD', '\uFFFD'};
@@ -125,7 +125,7 @@ public class UTF8Decoder  {
                         int codePoint = extractCodePoint(headByte, b2);
 
                         char[] characters;
-                        if(0x80 <= codePoint && codePoint < 0x7FF)
+                        if(0x80 <= codePoint && codePoint <= 0x7FF)
                             characters = Character.toChars(codePoint);
                         else
                             characters = new char[] {'\uFFFD', '\uFFFD'};
@@ -141,7 +141,7 @@ public class UTF8Decoder  {
                         int codePoint = extractCodePoint(headByte);
 
                         char[] characters;
-                        if(0 <= codePoint && codePoint < 0x7F)
+                        if(0 <= codePoint && codePoint <= 0x7F)
                             characters = Character.toChars(codePoint);
                         else
                             characters = new char[] {'\uFFFD'};
