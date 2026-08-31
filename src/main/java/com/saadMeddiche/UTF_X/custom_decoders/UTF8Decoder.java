@@ -66,7 +66,11 @@ public class UTF8Decoder  {
 
                         int codePoint = extractCodePoint(headByte, b2, b3, b4);
 
-                        char[] characters = Character.toChars(codePoint);
+                        char[] characters;
+                        if(0x10000 <= codePoint && codePoint < 0x10FFFF)
+                            characters = Character.toChars(codePoint);
+                        else
+                            characters = new char[] {'\uFFFD', '\uFFFD', '\uFFFD', '\uFFFD'};
 
                         stringBuilder.append(characters);
 
@@ -92,7 +96,11 @@ public class UTF8Decoder  {
 
                         int codePoint = extractCodePoint(headByte, b2, b3);
 
-                        char[] characters = Character.toChars(codePoint);
+                        char[] characters;
+                        if(0x800 <= codePoint && codePoint < 0xFFFF)
+                            characters = Character.toChars(codePoint);
+                        else
+                            characters = new char[] {'\uFFFD', '\uFFFD', '\uFFFD'};
 
                         stringBuilder.append(characters);
 
@@ -116,7 +124,11 @@ public class UTF8Decoder  {
 
                         int codePoint = extractCodePoint(headByte, b2);
 
-                        char[] characters = Character.toChars(codePoint);
+                        char[] characters;
+                        if(0x80 <= codePoint && codePoint < 0x7FF)
+                            characters = Character.toChars(codePoint);
+                        else
+                            characters = new char[] {'\uFFFD', '\uFFFD'};
 
                         stringBuilder.append(characters);
 
@@ -128,7 +140,11 @@ public class UTF8Decoder  {
 
                         int codePoint = extractCodePoint(headByte);
 
-                        char[] characters = Character.toChars(codePoint);
+                        char[] characters;
+                        if(0 <= codePoint && codePoint < 0x7F)
+                            characters = Character.toChars(codePoint);
+                        else
+                            characters = new char[] {'\uFFFD'};
 
                         stringBuilder.append(characters);
 
