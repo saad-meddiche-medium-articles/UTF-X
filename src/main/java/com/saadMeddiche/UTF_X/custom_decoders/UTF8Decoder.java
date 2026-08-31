@@ -33,6 +33,8 @@ public class UTF8Decoder  {
 
         try (SeekableByteChannel ch = Files.newByteChannel(filePath, StandardOpenOption.READ)) {
 
+            long treatedBytes = 0;
+            long fileSize = ch.size();
             StringBuilder stringBuilder = new StringBuilder();
             ByteBuffer bf = ByteBuffer.allocate((int) Math.min(1_024, file.length())); // 1Kio
 
@@ -130,8 +132,14 @@ public class UTF8Decoder  {
 
                 }
 
+                treatedBytes += bf.position();
+
                 bf.compact();
 
+            }
+
+            if(treatedBytes != fileSize) {
+                stringBuilder.append('\uFFFD');
             }
 
             return stringBuilder.toString();
