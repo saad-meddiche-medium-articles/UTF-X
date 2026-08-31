@@ -64,7 +64,9 @@ public class UTF8Decoder  {
                             continue;
                         }
 
-                        char[] characters = characters(headByte, b2, b3, b4);
+                        int codePoint = extractCodePoint(headByte, b2, b3, b4);
+
+                        char[] characters = Character.toChars(codePoint);
 
                         stringBuilder.append(characters);
 
@@ -88,9 +90,11 @@ public class UTF8Decoder  {
                             continue;
                         }
 
-                        char character = character(headByte, b2, b3);
+                        int codePoint = extractCodePoint(headByte, b2, b3);
 
-                        stringBuilder.append(character);
+                        char[] characters = Character.toChars(codePoint);
+
+                        stringBuilder.append(characters);
 
                         continue;
 
@@ -110,9 +114,11 @@ public class UTF8Decoder  {
                             continue;
                         }
 
-                        char character = character(headByte, b2);
+                        int codePoint = extractCodePoint(headByte, b2);
 
-                        stringBuilder.append(character);
+                        char[] characters = Character.toChars(codePoint);
+
+                        stringBuilder.append(characters);
 
                         continue;
 
@@ -120,9 +126,11 @@ public class UTF8Decoder  {
 
                     if((headByte & 0b1000_0000) == 0) {
 
-                        char character = character(headByte);
+                        int codePoint = extractCodePoint(headByte);
 
-                        stringBuilder.append(character);
+                        char[] characters = Character.toChars(codePoint);
+
+                        stringBuilder.append(characters);
 
                         continue;
 
@@ -152,27 +160,23 @@ public class UTF8Decoder  {
 
     }
 
-    private char character(byte b1) {
+    private int extractCodePoint(byte b1) {
 
-        int e1 = b1 & 0b0111_1111;
-
-        return (char) e1;
+        return b1 & 0b0111_1111;
 
     }
 
-    private char character(byte b1, byte b2) {
+    private int extractCodePoint(byte b1, byte b2) {
 
         int e1 = b1 & 0b0001_1111;
 
         int e2 = b2 & 0b0011_1111;
 
-        int merged = (e1 << 6) + e2;
-
-        return (char) merged;
+        return (e1 << 6) + e2;
 
     }
 
-    private char character(byte b1, byte b2, byte b3) {
+    private int extractCodePoint(byte b1, byte b2, byte b3) {
 
         int e1 = b1 & 0b0000_1111;
 
@@ -180,13 +184,11 @@ public class UTF8Decoder  {
 
         int e3 = b3 & 0b0011_1111;
 
-        int merged = (e1 << 12) + (e2 << 6) + e3;
-
-        return (char) merged;
+        return (e1 << 12) + (e2 << 6) + e3;
 
     }
 
-    private char[] characters(byte b1, byte b2, byte b3, byte b4) {
+    private int extractCodePoint(byte b1, byte b2, byte b3, byte b4) {
 
         int e1 = b1 & 0b0000_0111;
 
@@ -196,9 +198,7 @@ public class UTF8Decoder  {
 
         int e4 = b4 & 0b0011_1111;
 
-        int merged = (e1 << 18) + (e2 << 12) + (e3 << 6) + e4;
-
-        return Character.toChars(merged);
+        return (e1 << 18) + (e2 << 12) + (e3 << 6) + e4;
 
     }
 
