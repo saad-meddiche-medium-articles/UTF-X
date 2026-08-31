@@ -59,6 +59,27 @@ public class UTF8DecoderTestRunner {
         byte[] invalidLeadByte = new byte[] { (byte) 0xFF, 'A' };
         if (runRawByteTest("Invalid Lead Byte (0xFF)", decoder, invalidLeadByte, "\uFFFDA")) passed++; else failed++;
 
+        // Test 12: Upper Boundary Off-by-One Limits
+        // Verifies 0x7F (ASCII DEL), 0x07FF, 0xFFFF, and 0x10FFFF max boundaries
+        byte[] upperLimits = new byte[] {
+                (byte) 0x7F,                                           // U+007F (1-byte max)
+                (byte) 0xDF, (byte) 0xBF,                              // U+07FF (2-byte max)
+                (byte) 0xEF, (byte) 0xBF, (byte) 0xBF,                 // U+FFFF (3-byte max)
+                (byte) 0xF4, (byte) 0x8F, (byte) 0xBF, (byte) 0xBF     // U+10FFFF (4-byte max)
+        };
+        String expectedUpperLimits = "\u007F\u07FF\uFFFF\uD83F\uDFFF"; // Note: U+10FFFF in Java String is UTF-16 surrogate pair
+        if (runRawByteTest("Upper Boundary Limits", decoder, upperLimits, expectedUpperLimits)) passed++; else failed++;
+
+        // Test 13: UTF-16 Surrogate Range Disallowance (RFC 3629 §3)
+        // 0xED 0xA0 0x80 maps to U+D800 (Lead surrogate), which is prohibited in UTF-8
+        byte[] surrogateBytes = new byte[] { (byte) 0xED, (byte) 0xA0, (byte) 0x80 };
+        if (runRawByteTest("Prohibited UTF-16 Surrogate", decoder, surrogateBytes, "\uFFFD")) passed++; else failed++;
+
+        // Test 14: Single Replacement Char on Invalid Sequence
+        // Ensures 1 sequence failure = exactly 1 '\uFFFD', not multiple duplicated characters
+        byte[] bad4ByteSeq = new byte[] { (byte) 0xF0, (byte) 0x80, (byte) 0x80, (byte) 0x80 };
+        if (runRawByteTest("Single U+FFFD on Bad Seq", decoder, bad4ByteSeq, "\uFFFD")) passed++; else failed++;
+
         System.out.println("\n===============================================");
         System.out.printf("Test Summary: %d PASSED | %d FAILED%n", passed, failed);
         System.out.println("===============================================");
