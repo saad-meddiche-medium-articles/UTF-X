@@ -46,7 +46,7 @@ public class UTF8Decoder  {
 
                     byte headByte = bf.get();
 
-                    if((headByte & 0b1111_0000) == 0b1111_0000) {
+                    if((headByte & 0b1111_1000) == 0b1111_0000) {
 
                         if(bf.remaining() < 3) {
                             bf.position(bf.position() - 1);
@@ -74,7 +74,7 @@ public class UTF8Decoder  {
 
                     }
 
-                    if((headByte & 0b1110_0000) == 0b1110_0000) {
+                    if((headByte & 0b1111_0000) == 0b1110_0000) {
 
                         if(bf.remaining() < 2) {
                             bf.position(bf.position() - 1);
@@ -100,7 +100,7 @@ public class UTF8Decoder  {
 
                     }
 
-                    if((headByte & 0b1100_0000) == 0b1100_0000) {
+                    if((headByte & 0b1110_0000) == 0b1100_0000) {
 
                         if(bf.remaining() < 1) {
                             bf.position(bf.position() - 1);
@@ -124,7 +124,7 @@ public class UTF8Decoder  {
 
                     }
 
-                    if((headByte & 0b1000_0000) == 0) {
+                    if((headByte & 0b1000_0000) == 0b0000_0000) {
 
                         int codePoint = extractCodePoint(headByte);
 
