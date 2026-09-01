@@ -42,7 +42,7 @@ public class UTF8Decoder  {
 
                 bf.flip();
 
-                while (bf.position() < bf.limit()) {
+                while (bf.hasRemaining()) {
 
                     byte headByte = bf.get();
 
