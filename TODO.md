@@ -6,6 +6,7 @@
 3. [ ] UTF_X:
    1. [ ] UTF-8
    2. [ ] UTF_16
+      1. [ ] surrogate pairs
    3. [ ] UTF_32
 4. [ ] Byte order types:
    1. [ ] big endian

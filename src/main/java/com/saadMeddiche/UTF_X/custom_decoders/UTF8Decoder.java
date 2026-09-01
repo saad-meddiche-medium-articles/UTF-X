@@ -96,6 +96,11 @@ public class UTF8Decoder  {
 
                         int codePoint = extractCodePoint(headByte, b2, b3);
 
+                        if(0xD800 <= codePoint && codePoint <= 0xDFFF) {
+                            stringBuilder.append('\uFFFD');
+                            continue;
+                        }
+
                         char[] characters;
                         if(0x800 <= codePoint && codePoint <= 0xFFFF)
                             characters = Character.toChars(codePoint);
