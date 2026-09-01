@@ -67,7 +67,7 @@ public class UTF8DecoderTestRunner {
                 (byte) 0xEF, (byte) 0xBF, (byte) 0xBF,                 // U+FFFF (3-byte max)
                 (byte) 0xF4, (byte) 0x8F, (byte) 0xBF, (byte) 0xBF     // U+10FFFF (4-byte max)
         };
-        String expectedUpperLimits = "\u007F\u07FF\uFFFF\uD83F\uDFFF"; // Note: U+10FFFF in Java String is UTF-16 surrogate pair
+        String expectedUpperLimits = "\u007F߿\uFFFF\uDBFF\uDFFF";
         if (runRawByteTest("Upper Boundary Limits", decoder, upperLimits, expectedUpperLimits)) passed++; else failed++;
 
         // Test 13: UTF-16 Surrogate Range Disallowance (RFC 3629 §3)
