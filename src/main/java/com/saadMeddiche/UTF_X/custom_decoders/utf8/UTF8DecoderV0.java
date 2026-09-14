@@ -1,5 +1,6 @@
-package com.saadMeddiche.UTF_X.custom_decoders;
+package com.saadMeddiche.UTF_X.custom_decoders.utf8;
 
+import com.saadMeddiche.UTF_X.custom_decoders.UTF8CustomDecoder;
 import com.saadMeddiche.UTF_X.file_samples.UTF8Sample;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,11 +15,11 @@ import java.nio.file.StandardOpenOption;
 import static com.saadMeddiche.UTF_X.utils.ByteUtil.*;
 
 @Slf4j
-public class UTF8Decoder  {
+public class UTF8DecoderV0 implements UTF8CustomDecoder {
 
     public static void main(String[] args) {
 
-        UTF8Decoder decoder = new UTF8Decoder();
+        UTF8DecoderV0 decoder = new UTF8DecoderV0();
 
         String result = decoder.readString(new UTF8Sample().getFilePath());
 
